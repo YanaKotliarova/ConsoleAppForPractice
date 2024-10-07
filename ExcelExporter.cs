@@ -2,7 +2,7 @@
 {
     internal class ExcelExporter: IDataExporter
     {
-
+        public string ExporterName { get; set; } = "ExcelExporter";
         public void CreateFile()
         {
             Console.WriteLine("Создан Excel файл");

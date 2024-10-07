@@ -3,27 +3,24 @@ using Microsoft.Extensions.DependencyInjection;
 
 public class Program
 {
-
     public static void Main(string[] args)
     {
 
-        var services = new ServiceCollection()
-            .AddTransient<IDataExporter, ExcelExporter>()
-            .AddTransient<Exporter>();
-
+        var services = new ServiceCollection();
+        services.AddExporterFactory();
         using var serviceProvider = services.BuildServiceProvider();
 
-        var exporter = serviceProvider.GetService<Exporter>();
-        exporter?.Export();
+        var exporterFactory = serviceProvider.GetService<IExporterFactory>();
 
+        var exporter = exporterFactory.GetExporter("ExcelExporter");
 
+        exporter.CreateFile();
+        exporter.ExportDataToFile();
 
-        services.AddTransient<IDataExporter, XmlExporter>();
+        exporter = exporterFactory.GetExporter("XmlExporter");
 
-        using var serviceProvider2 = services.BuildServiceProvider();
-
-        exporter = serviceProvider2.GetService<Exporter>();
-        exporter?.Export();
+        exporter.CreateFile();
+        exporter.ExportDataToFile();
 
     }
 

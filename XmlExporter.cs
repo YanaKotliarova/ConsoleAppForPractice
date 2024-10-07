@@ -2,6 +2,7 @@
 {
     internal class XmlExporter: IDataExporter
     {
+        public string ExporterName { get; set; } = "XmlExporter";
         public void CreateFile()
         {
             Console.WriteLine("Создан Xml файл");
